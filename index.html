@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <link href="style.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <form action="AddTshirt.php">
+            <label for="brand">Brand</label>
+            <input type="text" id="brand" name="brand" placeholder="brand">
+            <label for="color">Color</label>
+            <input type="text" id="color" name="color" placeholder="color">
+            <label for="size">Size</label>
+            <input type="text" id="size" name="size" placeholder="size">
+            <input type="submit" value="add"/>
+        </form>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Brand</th>
+                    <th>Color</th>
+                    <th>Size</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+        
+        <?php
+              $connection = mysqli_connect("localhost","root","","sis_ciroimfinal");
+              $sql = "SELECT * FROM tshirt";
+              $result=$connection->query($sql);
+              while($row=mysqli_fetch_assoc($result)){
+                  echo "<tr>";
+                  echo "<td>".$row['tid']."</td>";
+                  echo "<td>".$row['brand']."</td>";
+                  echo "<td>".$row['color']."</td>";
+                  echo "<td>".$row['size']."</td>";               
+                  echo "<td>";
+                  echo "<a class=\"btn\" href=\"edittshirtview.php?tid=".$row['tid']."\">edit</a>";
+                  echo "<a class=\"btn\" href=\"deletetshirt.php?tid=".$row['tid']."\" onclick=\"return confirm('Are you sure?')\">delete</a>";
+                  echo "</td>";
+                  echo "</tr>";
+              }
+              $connection->close();
+        ?>
+        </table>
+    </body>
+</html>
